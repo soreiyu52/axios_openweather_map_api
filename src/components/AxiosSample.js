@@ -3,7 +3,7 @@ import axios from 'axios';
 import axiosJsonpAdapter from 'axios-jsonp'
 
 const config = {proxy: 'http://webservice.recruit.co.jp'}
-const API_ENDPOINT = 'http://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=9418d992ec5c342b&lat=34.67&lng=135.52&range=5&order=4?format=jsonp';
+const API_ENDPOINT = 'https://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=9418d992ec5c342b&lat=34.67&lng=135.52&range=5&order=4?format=jsonp';
 
 const AxiosSample = () => {
 
