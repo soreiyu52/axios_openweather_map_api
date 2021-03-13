@@ -1,62 +1,32 @@
-import React, {useState} from 'react';
+import React from 'react';
 import axios from 'axios';
+import axiosJsonpAdapter from 'axios-jsonp'
 
-const API_ENDPOINT = 'http://api.openweathermap.org/data/2.5/weather';
-const API_KEY = 'ed9e746d3ad6e7440bc04717247700b0'; // 発行した API key(自分で発行したものを使ってください。)
+const config = {proxy: 'http://webservice.recruit.co.jp'}
+const API_ENDPOINT = 'http://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=9418d992ec5c342b&lat=34.67&lng=135.52&range=5&order=4?format=jsonp';
 
 const AxiosSample = () => {
 
-    const [cityName, setCityName] = useState('');
-    const [data, setData] = useState({
-        city: '',
-        response: []
-    });
-
-    let state = {
-        apiKey: API_KEY,
-        requestCity: cityName,
-    };
-
+    window.callback = json => console.log(json)
     /**
      * 実際にhttpリクエストを送っている関数
      * ボタンを押すとaxios経由でopenweathermapAPIにhttpリクエストを送る
      */
-    const handleGetWeather = () => {
+    const getApi = () => {
         axios.get(API_ENDPOINT, {
-            params: {
-                q: state.requestCity,
-                APPID: state.apiKey
-            }
+            'headers': {'Content-Type': 'application/xml'},
+            'responseType': 'xml',
+            'adapter': axiosJsonpAdapter
         }).then(res => {
-            setData({
-                city: res.data.name,
-                response: res.data.weather
-            })
-        }).catch(function (error) {
+            console.log(res)
+        }).catch(error => {
             console.log(error);
         });
     }
 
-    /**
-     * 天気を表示させる関数
-     * 取得できなかった場合は出力しないようにしている。
-     * @returns {string | NodeJS.Module}
-     */
-    const view = () => {
-        if (data.response.length !== 0) {
-            return data.response[0].main
-        }
-    }
-
     return (
         <>
-            <input
-                type="text" value={state.requestCity}
-                onChange={(e) => setCityName(e.target.value)}
-            />
-            <button onClick={handleGetWeather}>Search</button>
-            <p> 場所 : {data.city} </p>
-            <p> 天気 : {view()}</p>
+            <button onClick={getApi}>get</button>
         </>
     );
 }
