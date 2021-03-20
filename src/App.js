@@ -5,7 +5,7 @@ import React from "react";
 const App = () => {
     return (
         <>
-            <h1>Openweather Map</h1>
+            <h1>食べログ用</h1>
             <AxiosSample />
         </>
     );
